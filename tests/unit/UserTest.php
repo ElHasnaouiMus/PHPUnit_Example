@@ -34,4 +34,41 @@ class UserTest extends TestCase{
 
     }
 
+    public function testFirstAndLastNameAreTrimed()
+    {
+        $user = new \App\Models\User;
+        $user->setFirstName('khalid     ');
+        $user->setlastName('     didi ');
+
+        $this->assertEquals($user->getFirstName(), 'khalid');
+        $this->assertEquals($user->getlastName(), 'didi');
+
+    }
+
+    public function testEmailAdressCanBeSet()
+    {
+        
+        $user = new \App\Models\User;
+        $user->setEmail('test@gmail.com');
+
+        $this->assertEquals($user->getEmail(), 'test@gmail.com');
+
+    }
+
+    public function testEmailVariableContainCorrectValues()
+    {
+        $user = new \App\Models\User;
+        $user->setFirstName('khalid     ');
+        $user->setEmail('test@gmail.com');
+
+        $emailVariables = $user->getEmailVariables();
+
+        $this->assertArrayHasKey('email', $emailVariables);
+        $this->assertArrayHasKey('firstName', $emailVariables);
+
+        $this->assertEquals($emailVariables['firstName'], $user->getFirstName());
+        $this->assertEquals($emailVariables['email'], $user->getEmail());
+
+    }
+
 }
